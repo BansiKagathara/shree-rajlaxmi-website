@@ -1,0 +1,10 @@
+{
+  "name": "shree-rajlaxmi-website",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "python app.py",
+    "start": "python app.py",
+    "cloudflare": "cloudflared tunnel --url http://127.0.0.1:5000"
+  }
+}
