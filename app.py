@@ -1,55 +1,273 @@
-from flask import Flask, abort, render_template
+from flask import Flask, render_template, abort
 
 app = Flask(__name__)
 
+# --------------------------------------------------
+# BUSINESS INFORMATION
+# --------------------------------------------------
+
+BUSINESS_NAME = "Shree Rajlaxmi Handloom & Furnishing"
+PHONE = "9638635600"
+WHATSAPP = "919638635600"
+EMAIL = "niravrajlaxmi@gmail.com"
+
+ADDRESS = (
+    "First Floor, Vaidehi Plaza, Opp. Hanuman Ji Temple, "
+    "Ravapar Ghunda Road, Morbi, Gujarat - 363641"
+)
+
+# --------------------------------------------------
+# PRODUCTS
+# --------------------------------------------------
+
 PRODUCTS = [
-    {"name": "Contemporary Sofa", "image": "product-23.jpeg", "price": "From ₹3,000", "description": "Modern comfort with a clean, elegant silhouette."},
-    {"name": "Premium Comfort Sofa", "image": "product-16.jpeg", "price": "Enquire for price", "description": "Soft textures and thoughtful proportions for modern homes."},
-    {"name": "Designer Curtains", "image": "product-20.jpeg", "price": "₹250 – ₹1,200 / metre", "description": "Elegant fabrics that transform the feel of a room."},
-    {"name": "Elegant Drape", "image": "product-22.jpeg", "price": "From ₹250 / metre", "description": "Soft textures and timeless window styling."},
-    {"name": "Comfort Mattress", "image": "product-4.jpeg", "price": "Enquire for price", "description": "Designed for comfortable, restful sleep."},
-    {"name": "Premium Rest Mattress", "image": "product-6.jpeg", "price": "Enquire for price", "description": "Supportive comfort for everyday relaxation."},
+
+    # SOFAS
+    {
+        "id": 1,
+        "category": "sofas",
+        "name": "Contemporary Sofa",
+        "image": "product-23.jpeg",
+        "price": "From ₹3,000",
+        "description": "Modern comfort with a clean and elegant silhouette."
+    },
+    {
+        "id": 2,
+        "category": "sofas",
+        "name": "Premium Comfort Sofa",
+        "image": "product-16.jpeg",
+        "price": "Enquire for price",
+        "description": "Soft textures and thoughtful proportions for everyday comfort."
+    },
+    {
+        "id": 3,
+        "category": "sofas",
+        "name": "Designer Sofa",
+        "image": "product-17.jpeg",
+        "price": "Enquire for price",
+        "description": "A stylish statement sofa designed for modern interiors."
+    },
+    {
+        "id": 4,
+        "category": "sofas",
+        "name": "Classic Sofa",
+        "image": "product-18.jpeg",
+        "price": "Enquire for price",
+        "description": "A timeless design combining comfort and elegance."
+    },
+
+    # CURTAINS
+    {
+        "id": 5,
+        "category": "curtains",
+        "name": "Elegant Curtains",
+        "image": "product-19.jpeg",
+        "price": "₹250 – ₹1,200 / metre",
+        "description": "Beautiful curtain fabrics for stylish and comfortable spaces."
+    },
+    {
+        "id": 6,
+        "category": "curtains",
+        "name": "Premium Curtains",
+        "image": "product-20.jpeg",
+        "price": "₹250 – ₹1,200 / metre",
+        "description": "Premium fabrics available in a variety of colours and patterns."
+    },
+    {
+        "id": 7,
+        "category": "curtains",
+        "name": "Designer Curtains",
+        "image": "product-21.jpeg",
+        "price": "₹250 – ₹1,200 / metre",
+        "description": "Designer curtain options to complement your interiors."
+    },
+
+    # MATTRESSES
+    {
+        "id": 8,
+        "category": "mattresses",
+        "name": "Comfort Mattress",
+        "image": "product-22.jpeg",
+        "price": "Enquire for price",
+        "description": "Comfortable mattress options designed for restful sleep."
+    },
+    {
+        "id": 9,
+        "category": "mattresses",
+        "name": "Premium Mattress",
+        "image": "product-24.jpeg",
+        "price": "Enquire for price",
+        "description": "Premium comfort and support for your bedroom."
+    },
+
+    # FURNISHING
+    {
+        "id": 10,
+        "category": "furnishing",
+        "name": "Custom Furnishing",
+        "image": "product-25.jpeg",
+        "price": "Enquire for price",
+        "description": "Custom furnishing solutions created according to your requirements."
+    }
 ]
 
-CATEGORIES = {
-    "sofas": {
-        "label": "SOFA COLLECTION",
-        "title": "Sofas made for living.",
-        "description": "Explore custom sofas designed around your room, your comfort and the way you gather at home.",
-        "images": ["product-1.png", "product-2.jpeg", "product-5.jpeg", "product-16.jpeg", "product-17.jpeg", "product-18.jpeg", "product-19.jpeg", "product-21.jpeg", "product-23.jpeg", "image-9.jpeg", "image-13.jpeg"],
-        "features": ["Custom sizes and layouts", "Comfort-focused foam options", "Fabric and colour selection"],
-    },
-    "curtains": {
-        "label": "CURTAIN COLLECTION",
-        "title": "Curtains that frame your space.",
-        "description": "Find the right fall, texture and light control for every window, with fabrics selected for your room.",
-        "images": ["product-9.jpeg", "product-10.jpeg", "product-11.jpeg", "product-12.png", "product-20.jpeg", "product-22.jpeg"],
-        "features": ["Blackout and light-filtering options", "Custom measurements", "Pleat and rod styles"],
-    },
-    "mattresses": {
-        "label": "MATTRESS COLLECTION",
-        "title": "Better comfort. Better rest.",
-        "description": "Explore mattress styles and speak with us about density, thickness, fabric and the right fit for your bed.",
-        "images": ["product-4.jpeg", "product-6.jpeg", "product-8.jpeg"],
-        "features": ["Foam density from 32 to 50", "Thickness from 4 to 12 inches", "GC cotton, cotton, jacquard and polyster fabrics"],
-    },
-}
+
+# --------------------------------------------------
+# HOME PAGE
+# --------------------------------------------------
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS,
+        products=PRODUCTS
+    )
 
-@app.route("/products")
-def products():
-    return render_template("products.html", products=PRODUCTS)
 
-@app.route("/category/<category_name>")
-def category(category_name):
-    category_data = CATEGORIES.get(category_name)
-    if category_data is None:
+# --------------------------------------------------
+# COLLECTIONS PAGE
+# --------------------------------------------------
+
+@app.route("/collections")
+def collections():
+    return render_template(
+        "collections.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS,
+        products=PRODUCTS
+    )
+
+
+# --------------------------------------------------
+# CATEGORY PAGES
+# --------------------------------------------------
+
+@app.route("/collections/<category>")
+def collection_category(category):
+
+    valid_categories = [
+        "sofas",
+        "curtains",
+        "mattresses",
+        "furnishing"
+    ]
+
+    if category not in valid_categories:
         abort(404)
-    return render_template("category.html", category=category_data, category_name=category_name)
 
+    category_products = [
+        product for product in PRODUCTS
+        if product["category"] == category
+    ]
+
+    category_names = {
+        "sofas": "Sofas",
+        "curtains": "Curtains",
+        "mattresses": "Mattresses",
+        "furnishing": "Custom Furnishing"
+    }
+
+    return render_template(
+        "category.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS,
+        products=category_products,
+        category=category_names[category]
+    )
+
+
+# --------------------------------------------------
+# PRODUCT PAGE
+# --------------------------------------------------
+
+@app.route("/product/<int:product_id>")
+def product(product_id):
+
+    selected_product = next(
+        (product for product in PRODUCTS if product["id"] == product_id),
+        None
+    )
+
+    if selected_product is None:
+        abort(404)
+
+    return render_template(
+        "product.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS,
+        product=selected_product
+    )
+
+
+# --------------------------------------------------
+# ABOUT / OUR STORY
+# --------------------------------------------------
+
+@app.route("/our-story")
+def our_story():
+    return render_template(
+        "our-story.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS
+    )
+
+
+# --------------------------------------------------
+# CUSTOMIZE
+# --------------------------------------------------
+
+@app.route("/customize")
+def customize():
+    return render_template(
+        "customize.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS
+    )
+
+
+# --------------------------------------------------
+# CONTACT
+# --------------------------------------------------
+
+@app.route("/contact")
+def contact():
+    return render_template(
+        "contact.html",
+        business_name=BUSINESS_NAME,
+        phone=PHONE,
+        whatsapp=WHATSAPP,
+        email=EMAIL,
+        address=ADDRESS
+    )
+
+
+# --------------------------------------------------
+# RUN APP
+# --------------------------------------------------
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
